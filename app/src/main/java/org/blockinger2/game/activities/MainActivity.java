@@ -3,6 +3,7 @@ package org.blockinger2.game.activities;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -95,6 +97,12 @@ public class MainActivity extends ListActivity
             i.setData(Uri.parse(url));
             startActivity(i);
         });
+
+        // Load last nickname
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        String nicknameString = prefs.getString("lastNickname", "");
+        EditText nickname = findViewById(R.id.nicknameEditView);
+        nickname.setText(nicknameString);
     }
 
     @Override
@@ -164,6 +172,12 @@ public class MainActivity extends ListActivity
 
     public void onClickStart(View view)
     {
+        // Save current nickname in Preferences
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        EditText nickname = findViewById(R.id.nicknameEditView);
+        String nicknameString = nickname.getText().toString();
+        prefs.edit().putString("lastNickname", nicknameString).apply();
+
         dialogView = getLayoutInflater().inflate(R.layout.dialog_seek_bar, null);
         leveldialogtext = dialogView.findViewById(R.id.leveldialogleveldisplay);
         leveldialogBar = dialogView.findViewById(R.id.levelseekbar);
