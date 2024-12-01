@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.widget.SimpleCursorAdapter;
+import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -108,28 +108,28 @@ public class MainActivity extends ListActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_about:
-                Intent intent1 = new Intent(this, AboutActivity.class);
-                startActivity(intent1);
-                return true;
-            case R.id.action_donate:
-                donateDialog.show();
-                return true;
-            case R.id.action_help:
-                Intent intent2 = new Intent(this, HelpActivity.class);
-                startActivity(intent2);
-                return true;
-            case R.id.action_exit:
-                GameState.destroy();
-                MainActivity.this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if(id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if(id == R.id.action_about) {
+            Intent intent1 = new Intent(this, AboutActivity.class);
+            startActivity(intent1);
+            return true;
+        } else if(id == R.id.action_donate) {
+            donateDialog.show();
+            return true;
+        } else if(id == R.id.action_help) {
+            Intent intent = new Intent(this, HelpActivity.class);
+            startActivity(intent);
+            return true;
+        } else if(id == R.id.action_exit) {
+            GameState.destroy();
+            MainActivity.this.finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
