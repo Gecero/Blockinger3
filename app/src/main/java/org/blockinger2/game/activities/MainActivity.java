@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import org.blockinger2.game.R;
 import org.blockinger2.game.components.GameState;
+import org.blockinger2.game.database.ScoreSync;
 import org.blockinger2.game.engine.Sound;
 import org.blockinger2.game.database.HighscoreOpenHelper;
 import org.blockinger2.game.database.ScoreDataSource;
@@ -103,6 +104,8 @@ public class MainActivity extends ListActivity
         String nicknameString = prefs.getString("lastNickname", "");
         EditText nickname = findViewById(R.id.nicknameEditView);
         nickname.setText(nicknameString);
+
+        ScoreSync.listenAndServe(this);
     }
 
     @Override

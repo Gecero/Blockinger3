@@ -17,10 +17,12 @@ public class HighscoreOpenHelper extends SQLiteOpenHelper
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
-        + TABLE_HIGHSCORES + "(" + COLUMN_ID
-        + " integer primary key autoincrement, " + COLUMN_SCORE
-        + " integer, " + COLUMN_PLAYERNAME
-        + " text);";
+        + TABLE_HIGHSCORES + "("
+        + COLUMN_ID + " integer primary key autoincrement, "
+        + COLUMN_SCORE + " integer not null, "
+        + COLUMN_PLAYERNAME + " text not null, "
+        + "UNIQUE (" + COLUMN_PLAYERNAME + ", " + COLUMN_SCORE + ")"
+        + ");";
 
     public HighscoreOpenHelper(Context context)
     {

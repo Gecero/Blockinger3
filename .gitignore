@@ -45,3 +45,6 @@ captures/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+
+# Cap'n Proto generated files
+app/src/main/java/org/blockinger2/game/database/serialization/ScoreSerialization.java

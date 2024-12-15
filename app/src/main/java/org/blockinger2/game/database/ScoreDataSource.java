@@ -11,7 +11,7 @@ public class ScoreDataSource
     // Database fields
     private SQLiteDatabase database;
     private HighscoreOpenHelper dbHelper;
-    private String[] allColumns = {HighscoreOpenHelper.COLUMN_ID,
+    private static final String[] allColumns = {HighscoreOpenHelper.COLUMN_ID,
         HighscoreOpenHelper.COLUMN_SCORE,
         HighscoreOpenHelper.COLUMN_PLAYERNAME};
 
@@ -44,7 +44,6 @@ public class ScoreDataSource
         cursor.close();
         return newScore;
     }
-
     public void deleteScore(Score score)
     {
         long id = score.getId();
@@ -53,8 +52,11 @@ public class ScoreDataSource
             + " = " + id, null);
     }
 
-    private Score cursorToScore(Cursor cursor)
+    public static Score cursorToScore(Cursor cursor)
     {
+        if(cursor.getCount() == 0)
+            return null;
+
         Score score = new Score();
         score.setId(cursor.getLong(0));
         score.setScore(cursor.getLong(1));

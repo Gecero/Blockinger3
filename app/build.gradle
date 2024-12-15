@@ -22,9 +22,21 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
    }
+
+}
+
+tasks.register('generateCapnpCode', Exec) {
+    workingDir = file('src/main/java/org/blockinger2/game/database/serialization')
+    // We run sh in order to resolve the wildcard
+    commandLine 'sh', '-c', 'capnp compile -o java *.capnp'
+}
+// Run Cap'n Proto compilation before the java compilation
+tasks.named('preBuild').configure {
+    dependsOn tasks.named('generateCapnpCode')
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'org.capnproto:runtime:0.1.16'
 }
